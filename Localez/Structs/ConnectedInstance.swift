@@ -45,19 +45,11 @@ struct ConnectedInstance: Codable, Hashable, Sendable, Identifiable {
         self.username = username
     }
     
-    private var accessTokenKey: String {
-        self.username + "_access"
-    }
-    
-    private var refreshTokenKey: String {
-        self.username + "_refresh"
-    }
-    
     /**
      Save this instance to userdefaults
      - Parameter token: Auth token for this instance
      */
-    func save(accessToken: String, refreshToken: String) throws {
+    func save(refreshToken: String) throws {
         guard let defaults = UserDefaults.localez else {
             throw ConnectedInstanceError.couldntAccessUserdefaults
         }
@@ -68,36 +60,26 @@ struct ConnectedInstance: Codable, Hashable, Sendable, Identifiable {
             connectedInstances = try JSONDecoder().decode([String:ConnectedInstance].self, from: Data(instancesData.utf8))
         }
         
-        try KeychainHandler.standard.save(Data(accessToken.utf8), service: self.serverURL.absoluteString, account: self.accessTokenKey)
-        try KeychainHandler.standard.save(Data(refreshToken.utf8), service: self.serverURL.absoluteString, account: self.refreshTokenKey)
+        try KeychainHandler.standard.save(Data(refreshToken.utf8), service: self.serverURL.absoluteString, account: self.username)
         
         connectedInstances[self.id] = self
-        
         defaults.set(connectedInstances.rawValue, forKey: .userDefaults(.connectedInstances))
     }
     
     /**
      Get the auth token for this instance
-     - Returns: The access and refresh token
+     - Returns: The refresh token
      */
-    func getTokens() throws -> (String,String) {
-        guard let accesstokenData = KeychainHandler.standard.read(service: self.serverURL.absoluteString, account: self.accessTokenKey) else {
+    func getToken() throws -> String {
+        guard let refreshTokenData = KeychainHandler.standard.read(service: self.serverURL.absoluteString, account: self.username) else {
             throw ConnectedInstanceError.tokenDataNotFound
-        }
-        
-        guard let refreshTokenData = KeychainHandler.standard.read(service: self.serverURL.absoluteString, account: self.refreshTokenKey) else {
-            throw ConnectedInstanceError.tokenDataNotFound
-        }
-        
-        guard let accessToken = String(data: accesstokenData, encoding: .utf8) else {
-            throw ConnectedInstanceError.couldntDecodeToken
         }
         
         guard let refreshToken = String(data: refreshTokenData, encoding: .utf8) else {
             throw ConnectedInstanceError.couldntDecodeToken
         }
         
-        return (accessToken, refreshToken)
+        return refreshToken
     }
     
     /**
@@ -113,8 +95,7 @@ struct ConnectedInstance: Codable, Hashable, Sendable, Identifiable {
         
         connectedInstances.removeValue(forKey: self.id)
         
-        KeychainHandler.standard.delete(service: self.serverURL.absoluteString, account: self.accessTokenKey)
-        KeychainHandler.standard.delete(service: self.serverURL.absoluteString, account: self.refreshTokenKey)
+        KeychainHandler.standard.delete(service: self.serverURL.absoluteString, account: self.username)
         
         if activeInstanceId == self.id {
             defaults.set(connectedInstances.values.first?.id, forKey: .userDefaults(.activeInstanceId))

@@ -16,7 +16,7 @@ struct SwitchServerLink: View {
         NavigationLink(destination: SwitchServerView()) {
             VStack {
                 Text("Connected to \(self.connectionHandler.apiHandler.baseURL.host() ?? self.connectionHandler.apiHandler.baseURL.absoluteString)")
-                NavigationLink("Switch server?", destination: Text(""))
+                NavigationLink("Switch server?", destination: SwitchServerView())
                     .foregroundStyle(.tint)
             }
         }

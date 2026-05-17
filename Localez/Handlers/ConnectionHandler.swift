@@ -29,11 +29,10 @@ class ConnectionHandler {
     init() {
         do {
             let activeInstance = try ConnectedInstance.getActiveInstance()
-            let (accessToken, refreshToken) = try activeInstance.getTokens()
+            let refreshToken = try activeInstance.getToken()
             
             self.apiHandler = LocalezApiHandler(
                 baseURL: activeInstance.serverURL,
-                accessToken: accessToken,
                 refreshToken: refreshToken,
                 tokenRefreshHook: activeInstance.save
             )
@@ -51,6 +50,10 @@ class ConnectionHandler {
     
     init(apiHandler: LocalezApiHandler) {
         self.apiHandler = apiHandler
+    }
+    
+    func switchServerBaseURL(_ newURL: URL) {
+        self.apiHandler = LocalezApiHandler(baseURL: newURL)
     }
     
     func login(_ response: TokenResponse, username: String) throws {
@@ -78,9 +81,16 @@ class ConnectionHandler {
     }
     
     func applyNewInstance(instance: ConnectedInstance, accessToken: String, refreshToken: String) throws {
-        try instance.save(accessToken: accessToken, refreshToken: refreshToken)
+        try instance.save(refreshToken: refreshToken)
         try instance.markActive()
         self.currentInstance = instance
+        
+        self.apiHandler = LocalezApiHandler(
+            baseURL: self.apiHandler.baseURL,
+            accessToken: accessToken,
+            refreshToken: refreshToken,
+            tokenRefreshHook: instance.save
+        )
     }
     
     func startRegistration(username: String, password: String) async throws -> (RegisterResponse, ConnectedInstance, Error?) {

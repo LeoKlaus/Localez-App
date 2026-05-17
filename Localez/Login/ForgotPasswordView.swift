@@ -27,14 +27,16 @@ struct ForgotPasswordView: View {
                 .bold()
             Text("Enter your recovery words to reset your password.")
                 .foregroundStyle(.secondary)
+                .multilineTextAlignment(.center)
             
             TextField("Username", text: self.$username)
                 .textContentType(.username)
-            
+                .textInputAutocapitalization(.never)
             
             VStack {
                 TextField("Recovery words (space-separated)", text: self.$recoveryWords)
                 Text("Enter all 12 words separated by spaces")
+                    .textInputAutocapitalization(.never)
                     .foregroundStyle(.secondary)
                     .font(.caption)
             }.padding(.bottom)
@@ -78,6 +80,7 @@ struct ForgotPasswordView: View {
         Task {
             do {
                 let tokenResponse = try await self.connectionHandler.apiHandler.recoverAccount(username: self.username, recoveryWords: wordArray, newPassword: self.password)
+                self.errorHandler.showInfo("Password reset successfully!")
                 try self.connectionHandler.login(tokenResponse, username: self.username)
             } catch {
                 self.errorHandler.handle(error, while: "recovering account")

@@ -112,6 +112,7 @@ struct RegistrationView: View {
         }
         Task {
             do {
+                self.errorHandler.showInfo("Account created!")
                 try self.connectionHandler.applyNewInstance(instance: newInstance, accessToken: response.accessToken, refreshToken: response.refreshToken)
             } catch {
                 self.errorHandler.handle(error, while: "logging in")

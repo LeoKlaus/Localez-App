@@ -26,8 +26,8 @@ nonisolated class MockApiHandler: LocalezApiHandler {
     init() {
         super.init(
             baseURL: URL(string: "https://translate.wehrfritz.me")!,
-            tokenRefreshHook: { access, refresh in
-                Self.logger.debug("Updated tokens: (\(access), \(refresh)")
+            tokenRefreshHook: { refresh in
+                Self.logger.debug("Updated tokens: (\(refresh)")
             }
         )
     }

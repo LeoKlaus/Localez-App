@@ -34,9 +34,22 @@
 		4AE63CF62FB9E9DD00D993EE /* LocalezUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LocalezUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		4AE64C962FBA757100D993EE /* Exceptions for "Localez" folder in "Localez" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 4AE63CDE2FB9E9DC00D993EE /* Localez */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		4AE63CE12FB9E9DC00D993EE /* Localez */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				4AE64C962FBA757100D993EE /* Exceptions for "Localez" folder in "Localez" target */,
+			);
 			path = Localez;
 			sourceTree = "<group>";
 		};
@@ -404,6 +417,7 @@
 				ENABLE_RESOURCE_ACCESS_USB = NO;
 				ENABLE_USER_SELECTED_FILES = readonly;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Localez/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Localez;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.developer-tools";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
@@ -461,6 +475,7 @@
 				ENABLE_RESOURCE_ACCESS_USB = NO;
 				ENABLE_USER_SELECTED_FILES = readonly;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Localez/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Localez;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.developer-tools";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;

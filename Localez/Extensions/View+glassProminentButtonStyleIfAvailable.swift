@@ -15,9 +15,11 @@ extension View {
         if #available(iOS 26.0, macOS 26.0, *) {
             self
                 .buttonStyle(.glassProminent)
+                .fittingForegroundColor()
         } else {
             self
                 .buttonStyle(.borderedProminent)
+                .fittingForegroundColor()
         }
     }
 }

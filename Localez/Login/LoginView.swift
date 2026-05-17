@@ -10,6 +10,7 @@ import EasyErrorHandling
 import Localez_API
 
 struct LoginView: View {
+    @Environment(\.colorScheme) private var colorScheme
     
     @Environment(ConnectionHandler.self) var connectionHandler
     @EnvironmentObject var errorHandler: ErrorHandler
@@ -26,7 +27,16 @@ struct LoginView: View {
         VStack {
             Spacer()
             
+            Image(.simpleIcon)
+                .resizable()
+                .scaledToFit()
+                .frame(maxHeight: 150)
+            
+            Spacer()
+            
             Text("Welcome to **Localez**")
+                .font(Font.custom("AbyssinicaSIL-Regular", size: 18))
+            
             Text("To get started, sign in with your account.")
                 .foregroundStyle(.secondary)
             
@@ -46,11 +56,24 @@ struct LoginView: View {
                     .focused(self.$isTotpFocused)
             }
             
-            Button("Sign in", action: self.signIn)
+            HStack {
+                Button(action: self.signIn) {
+                    Text("Sign in")
+                        .frame(maxWidth: .infinity)
+                }
                 .glassProminentButtonStyleIfAvailable()
-                .padding()
                 .disabled(self.username.isEmpty || self.password.isEmpty || (self.totpRequired && self.totpToken.isEmpty))
-            
+                
+                Text("or")
+                
+                Button(action: self.passkeySignIn) {
+                    Label("Use passkey", systemImage: "person.badge.key")
+                        .frame(maxWidth: .infinity)
+                        
+                }
+                .glassProminentButtonStyleIfAvailable()
+            }
+            .padding()
             
             VStack(spacing: 15) {
                 NavigationLink("Sign up", destination: RegistrationView())
@@ -79,6 +102,24 @@ struct LoginView: View {
                 } else {
                     self.errorHandler.handle(error, while: "signing in")
                 }
+            }
+        }
+    }
+    
+    func passkeySignIn() {
+        Task {
+            do {
+                let tokenResponse = try await self.connectionHandler.apiHandler.signInWithPasskey()
+                
+                do {
+                    let user = try await self.connectionHandler.apiHandler.getMe()
+                    
+                    try self.connectionHandler.login(tokenResponse, username: user.username)
+                } catch {
+                    self.errorHandler.handle(error, while: "getting user info after passkey authentication")
+                }
+            } catch {
+                self.errorHandler.handle(error, while: "signing in with passkey")
             }
         }
     }

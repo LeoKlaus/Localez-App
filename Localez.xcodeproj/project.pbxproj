@@ -6,6 +6,11 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		4AE63D0B2FB9E9F100D993EE /* Localez-API in Frameworks */ = {isa = PBXBuildFile; productRef = 4AE63D0A2FB9E9F100D993EE /* Localez-API */; };
+		4AE63D0E2FB9EA1D00D993EE /* EasyErrorHandling in Frameworks */ = {isa = PBXBuildFile; productRef = 4AE63D0D2FB9EA1D00D993EE /* EasyErrorHandling */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
 		4AE63CED2FB9E9DD00D993EE /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -35,16 +40,6 @@
 			path = Localez;
 			sourceTree = "<group>";
 		};
-		4AE63CEF2FB9E9DD00D993EE /* LocalezTests */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = LocalezTests;
-			sourceTree = "<group>";
-		};
-		4AE63CF92FB9E9DD00D993EE /* LocalezUITests */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = LocalezUITests;
-			sourceTree = "<group>";
-		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -52,6 +47,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4AE63D0E2FB9EA1D00D993EE /* EasyErrorHandling in Frameworks */,
+				4AE63D0B2FB9E9F100D993EE /* Localez-API in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -76,8 +73,6 @@
 			isa = PBXGroup;
 			children = (
 				4AE63CE12FB9E9DC00D993EE /* Localez */,
-				4AE63CEF2FB9E9DD00D993EE /* LocalezTests */,
-				4AE63CF92FB9E9DD00D993EE /* LocalezUITests */,
 				4AE63CE02FB9E9DC00D993EE /* Products */,
 			);
 			sourceTree = "<group>";
@@ -112,6 +107,8 @@
 			);
 			name = Localez;
 			packageProductDependencies = (
+				4AE63D0A2FB9E9F100D993EE /* Localez-API */,
+				4AE63D0D2FB9EA1D00D993EE /* EasyErrorHandling */,
 			);
 			productName = Localez;
 			productReference = 4AE63CDF2FB9E9DC00D993EE /* Localez.app */;
@@ -129,9 +126,6 @@
 			);
 			dependencies = (
 				4AE63CEE2FB9E9DD00D993EE /* PBXTargetDependency */,
-			);
-			fileSystemSynchronizedGroups = (
-				4AE63CEF2FB9E9DD00D993EE /* LocalezTests */,
 			);
 			name = LocalezTests;
 			packageProductDependencies = (
@@ -152,9 +146,6 @@
 			);
 			dependencies = (
 				4AE63CF82FB9E9DD00D993EE /* PBXTargetDependency */,
-			);
-			fileSystemSynchronizedGroups = (
-				4AE63CF92FB9E9DD00D993EE /* LocalezUITests */,
 			);
 			name = LocalezUITests;
 			packageProductDependencies = (
@@ -195,6 +186,10 @@
 			);
 			mainGroup = 4AE63CD62FB9E9DB00D993EE;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				4AE63D092FB9E9F100D993EE /* XCLocalSwiftPackageReference "../Localez-API" */,
+				4AE63D0C2FB9EA1D00D993EE /* XCLocalSwiftPackageReference "../EasyErrorHandling" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 4AE63CE02FB9E9DC00D993EE /* Products */;
 			projectDirPath = "";
@@ -390,14 +385,27 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Localez/Localez.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 28KGVFV686;
 				ENABLE_APP_SANDBOX = YES;
 				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_INCOMING_NETWORK_CONNECTIONS = NO;
+				ENABLE_OUTGOING_NETWORK_CONNECTIONS = YES;
 				ENABLE_PREVIEWS = YES;
+				ENABLE_RESOURCE_ACCESS_AUDIO_INPUT = NO;
+				ENABLE_RESOURCE_ACCESS_BLUETOOTH = NO;
+				ENABLE_RESOURCE_ACCESS_CALENDARS = NO;
+				ENABLE_RESOURCE_ACCESS_CAMERA = NO;
+				ENABLE_RESOURCE_ACCESS_CONTACTS = NO;
+				ENABLE_RESOURCE_ACCESS_LOCATION = NO;
+				ENABLE_RESOURCE_ACCESS_PRINTING = NO;
+				ENABLE_RESOURCE_ACCESS_USB = NO;
 				ENABLE_USER_SELECTED_FILES = readonly;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = Localez;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.developer-tools";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
@@ -408,10 +416,10 @@
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 26.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.6;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 26.4;
+				MACOSX_DEPLOYMENT_TARGET = 15.6;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = me.wehrfritz.Localez;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -425,7 +433,7 @@
 				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2,7";
-				XROS_DEPLOYMENT_TARGET = 26.4;
+				XROS_DEPLOYMENT_TARGET = 2.6;
 			};
 			name = Debug;
 		};
@@ -434,14 +442,27 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Localez/Localez.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 28KGVFV686;
 				ENABLE_APP_SANDBOX = YES;
 				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_INCOMING_NETWORK_CONNECTIONS = NO;
+				ENABLE_OUTGOING_NETWORK_CONNECTIONS = YES;
 				ENABLE_PREVIEWS = YES;
+				ENABLE_RESOURCE_ACCESS_AUDIO_INPUT = NO;
+				ENABLE_RESOURCE_ACCESS_BLUETOOTH = NO;
+				ENABLE_RESOURCE_ACCESS_CALENDARS = NO;
+				ENABLE_RESOURCE_ACCESS_CAMERA = NO;
+				ENABLE_RESOURCE_ACCESS_CONTACTS = NO;
+				ENABLE_RESOURCE_ACCESS_LOCATION = NO;
+				ENABLE_RESOURCE_ACCESS_PRINTING = NO;
+				ENABLE_RESOURCE_ACCESS_USB = NO;
 				ENABLE_USER_SELECTED_FILES = readonly;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = Localez;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.developer-tools";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
@@ -452,10 +473,10 @@
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 26.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.6;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 26.4;
+				MACOSX_DEPLOYMENT_TARGET = 15.6;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = me.wehrfritz.Localez;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -469,7 +490,7 @@
 				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2,7";
-				XROS_DEPLOYMENT_TARGET = 26.4;
+				XROS_DEPLOYMENT_TARGET = 2.6;
 			};
 			name = Release;
 		};
@@ -615,6 +636,28 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCLocalSwiftPackageReference section */
+		4AE63D092FB9E9F100D993EE /* XCLocalSwiftPackageReference "../Localez-API" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = "../Localez-API";
+		};
+		4AE63D0C2FB9EA1D00D993EE /* XCLocalSwiftPackageReference "../EasyErrorHandling" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = ../EasyErrorHandling;
+		};
+/* End XCLocalSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		4AE63D0A2FB9E9F100D993EE /* Localez-API */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = "Localez-API";
+		};
+		4AE63D0D2FB9EA1D00D993EE /* EasyErrorHandling */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = EasyErrorHandling;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 4AE63CD72FB9E9DB00D993EE /* Project object */;
 }

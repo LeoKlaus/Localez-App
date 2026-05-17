@@ -53,6 +53,15 @@ class ConnectionHandler {
         self.apiHandler = apiHandler
     }
     
+    func login(_ response: TokenResponse, username: String) throws {
+        let newInstance = ConnectedInstance(
+            serverURL: self.apiHandler.baseURL,
+            username: username
+        )
+        
+        try self.applyNewInstance(instance: newInstance, accessToken: response.accessToken, refreshToken: response.refreshToken)
+    }
+    
     func logout() async throws {
         try await self.apiHandler.logout()
         try self.currentInstance?.delete()
@@ -65,13 +74,7 @@ class ConnectionHandler {
             password: password,
             totpCode: totpToken
         )
-        
-        let newInstance = ConnectedInstance(
-            serverURL: self.apiHandler.baseURL,
-            username: username
-        )
-        
-        try self.applyNewInstance(instance: newInstance, accessToken: response.accessToken, refreshToken: response.refreshToken)
+        try self.login(response, username: username)
     }
     
     func applyNewInstance(instance: ConnectedInstance, accessToken: String, refreshToken: String) throws {

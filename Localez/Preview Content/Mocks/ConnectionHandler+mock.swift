@@ -49,7 +49,8 @@ nonisolated class MockApiHandler: LocalezApiHandler {
             guard let body else {
                 throw MockApiError.missingBody
             }
-            let request = try Self.jsonDecoder.decode(RegisterRequest.self, from: body)
+            
+            _ = try Self.jsonDecoder.decode(RegisterRequest.self, from: body)
             
             return try Self.jsonEncoder.encode(
                 RegisterResponse(

@@ -10,7 +10,7 @@ import Localez_API
 
 nonisolated extension UserResponse {
     static let mockAdmin = UserResponse(
-        id: UUID(),
+        id: UUID().uuidString,
         username: "leo",
         globalRole: .admin,
         isActive: true,
@@ -18,7 +18,7 @@ nonisolated extension UserResponse {
     )
     
     static let mockUser = UserResponse(
-        id: UUID(),
+        id: UUID().uuidString,
         username: "demo",
         globalRole: .user,
         isActive: true,

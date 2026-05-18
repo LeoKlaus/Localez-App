@@ -48,7 +48,7 @@ struct AuthSettingsView: View {
                 }
                 
                 if let bindingMe = Binding(self.$me) {
-                    NavigationLink(destination: PasskeySettingsView()) {
+                    NavigationLink(destination: PasskeySettingsView(me: bindingMe.wrappedValue)) {
                         if bindingMe.wrappedValue.passkeysConfigured {
                             Label("Manage passkeys", systemImage: "person.badge.key")
                         } else {

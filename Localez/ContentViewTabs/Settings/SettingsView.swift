@@ -28,13 +28,16 @@ struct SettingsView: View {
                     LogOutButton()
                 }
             }
+            .listStyle(.sidebar)
             .navigationTitle("Settings")
         } detail: {
-            switch self.settingsTab {
-            case .auth:
-                AuthSettingsView()
-            case .none:
-                Text("Select a settings Item")
+            NavigationStack {
+                switch self.settingsTab {
+                case .auth:
+                    AuthSettingsView()
+                case .none:
+                    Text("Select a settings Item")
+                }
             }
         }
     }

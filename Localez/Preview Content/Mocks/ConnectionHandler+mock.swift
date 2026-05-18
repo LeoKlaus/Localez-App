@@ -43,7 +43,13 @@ nonisolated class MockApiHandler: LocalezApiHandler {
     
     private var user: MeResponse = .mockInsecure
     
+    private var registeredPasskeys = [
+        PasskeyResponse.mock
+    ]
+    
     override func sendRequest(method: HttpMethod, endpoint: ApiEndpoint, body: Data? = nil, queryItems: [URLQueryItem] = [], isRetry: Bool = false, isAuthenticated: Bool = true) async throws -> Data {
+        
+        Self.logger.debug("Simulating \(method.rawValue, privacy: .public) request to \(endpoint.path, privacy: .public)")
         
         try await Task.sleep(for: .milliseconds(Int.random(in: 300...1000)))
         
@@ -82,6 +88,16 @@ nonisolated class MockApiHandler: LocalezApiHandler {
             return Data()
         case .disableTotp:
             self.user = .mockInsecure
+            return Data()
+        case .passkeyCredentials:
+            return try Self.jsonEncoder.encode(self.registeredPasskeys)
+        case .passkeyCredential(let id):
+            guard method == .DELETE else {
+                throw ApiError.badRequest(response: nil)
+            }
+            self.registeredPasskeys.removeAll(where: {
+                $0.id == id
+            })
             return Data()
         default:
             throw MockApiError.notImplemented

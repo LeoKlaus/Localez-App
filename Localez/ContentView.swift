@@ -17,34 +17,34 @@ struct ContentView: View {
     @State private var projects: [ProjectResponse] = []
     
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, \(self.connectionHandler.currentInstance?.username ?? "")!")
-            
-            ScrollView {
-                ForEach(self.projects) { project in
-                    Text(project.name)
+        TabView {
+            Tab("Projects", systemImage: "folder") {
+                VStack {
+                    Image(systemName: "globe")
+                        .imageScale(.large)
+                        .foregroundStyle(.tint)
+                    Text("Hello, \(self.connectionHandler.currentInstance?.username ?? "")!")
+                    
+                    ScrollView {
+                        ForEach(self.projects) { project in
+                            Text(project.name)
+                        }
+                    }
+                    
+                    
                 }
-            }
-            
-            Button("Log Out") {
-                Task {
-                    do {
-                        try await self.connectionHandler.logout()
-                    } catch {
-                        self.errorHandler.handle(error, while: "logging out")
+                .padding()
+                .throwingTask(taskDescription: "loading projects") {
+                    let loadedProjects: [ProjectResponse] = try await self.connectionHandler.apiHandler.get()
+                    
+                    withAnimation {
+                        self.projects = loadedProjects
                     }
                 }
             }
-        }
-        .padding()
-        .throwingTask(taskDescription: "loading projects") {
-            let loadedProjects: [ProjectResponse] = try await self.connectionHandler.apiHandler.get()
             
-            withAnimation {
-                self.projects = loadedProjects
+            Tab("Settings", systemImage: "gear") {
+                SettingsView()
             }
         }
     }

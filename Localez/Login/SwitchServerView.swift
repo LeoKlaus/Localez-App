@@ -36,9 +36,11 @@ struct SwitchServerView: View {
                 }
                 
                 TextField("Localez URL", text: self.$newUrlStr)
-                    .textInputAutocapitalization(.never)
                     .textContentType(.URL)
+#if os(iOS)
                     .keyboardType(.URL)
+                    .textInputAutocapitalization(.never)
+#endif
             }
             
             if self.serverProtocol == "http://" {

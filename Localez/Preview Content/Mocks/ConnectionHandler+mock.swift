@@ -9,9 +9,18 @@ import Foundation
 import Localez_API
 import OSLog
 
-enum MockApiError: Error {
+enum MockApiError: Error, LocalizedError {
     case notImplemented
     case missingBody
+    
+    var errorDescription: String? {
+        switch self {
+        case .notImplemented:
+            "Not implemented"
+        case .missingBody:
+            "Request missing body"
+        }
+    }
 }
 
 @Observable
@@ -32,7 +41,12 @@ nonisolated class MockApiHandler: LocalezApiHandler {
         )
     }
     
+    private var user: MeResponse = .mockInsecure
+    
     override func sendRequest(method: HttpMethod, endpoint: ApiEndpoint, body: Data? = nil, queryItems: [URLQueryItem] = [], isRetry: Bool = false, isAuthenticated: Bool = true) async throws -> Data {
+        
+        try await Task.sleep(for: .milliseconds(Int.random(in: 300...1000)))
+        
         switch endpoint {
         case .login:
             guard let body else {
@@ -53,25 +67,22 @@ nonisolated class MockApiHandler: LocalezApiHandler {
             _ = try Self.jsonDecoder.decode(RegisterRequest.self, from: body)
             
             return try Self.jsonEncoder.encode(
-                RegisterResponse(
-                    accessToken: "mock-access",
-                    refreshToken: "mock-refresh",
-                    recoveryWords: [
-                        "bandicoy",
-                        "gospelly",
-                        "subrule",
-                        "sovranty",
-                        "entasis",
-                        "pimelite",
-                        "cobbler",
-                        "omani",
-                        "salwey",
-                        "owling",
-                        "mutely",
-                        "reggie"
-                    ]
-                )
+                RegisterResponse.mock
             )
+        case .me:
+            return try Self.jsonEncoder.encode(
+                user
+            )
+        case .setupTotp:
+            return try Self.jsonEncoder.encode(
+                TotpSetupResponse.mock
+            )
+        case .verifyTotp:
+            self.user = .mock2fa
+            return Data()
+        case .disableTotp:
+            self.user = .mockInsecure
+            return Data()
         default:
             throw MockApiError.notImplemented
         }

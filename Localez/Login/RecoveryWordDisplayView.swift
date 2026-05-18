@@ -44,7 +44,11 @@ struct RecoveryWordDisplayView: View {
             }
             
             Button("Copy to clipboard", systemImage: "doc.on.doc") {
+                #if canImport(UIKit)
                 UIPasteboard.general.string = self.words.joined(separator: " ")
+                #else
+                NSPasteboard.general.setString(self.words.joined(separator: " "), forType: .string)
+                #endif
             }
             .padding()
             .glassProminentButtonStyleIfAvailable()

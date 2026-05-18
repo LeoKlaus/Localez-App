@@ -38,7 +38,9 @@ struct RegistrationView: View {
                         
             TextField("Username", text: self.$username)
                 .textContentType(.username)
+#if os(iOS)
                 .textInputAutocapitalization(.never)
+#endif
             
             SecureField("Password", text: self.$password)
                 .textContentType(.newPassword)

@@ -10,7 +10,6 @@ import EasyErrorHandling
 import Localez_API
 
 struct LoginView: View {
-    @Environment(\.colorScheme) private var colorScheme
     
     @Environment(ConnectionHandler.self) var connectionHandler
     @EnvironmentObject var errorHandler: ErrorHandler
@@ -41,8 +40,10 @@ struct LoginView: View {
                 .foregroundStyle(.secondary)
             
             TextField("Username", text: self.$username)
-                .textInputAutocapitalization(.never)
                 .textContentType(.username)
+#if os(iOS)
+                .textInputAutocapitalization(.never)
+#endif
             
             SecureField("Password", text: self.$password)
                 .textContentType(.password)
@@ -51,9 +52,11 @@ struct LoginView: View {
             if self.totpRequired {
                 TextField("Authenticator code", text: self.$totpToken)
                     .textContentType(.oneTimeCode)
-                    .keyboardType(.numberPad)
                     .onSubmit(self.signIn)
                     .focused(self.$isTotpFocused)
+#if os(iOS)
+                    .keyboardType(.numberPad)
+#endif
             }
             
             HStack {
@@ -112,7 +115,7 @@ struct LoginView: View {
                 let tokenResponse = try await self.connectionHandler.apiHandler.signInWithPasskey()
                 
                 do {
-                    let user = try await self.connectionHandler.apiHandler.getMe()
+                    let user: MeResponse = try await self.connectionHandler.apiHandler.get()
                     
                     try self.connectionHandler.login(tokenResponse, username: user.username)
                 } catch {

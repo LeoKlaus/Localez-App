@@ -31,12 +31,16 @@ struct ForgotPasswordView: View {
             
             TextField("Username", text: self.$username)
                 .textContentType(.username)
+#if os(iOS)
                 .textInputAutocapitalization(.never)
+#endif
             
             VStack {
                 TextField("Recovery words (space-separated)", text: self.$recoveryWords)
                 Text("Enter all 12 words separated by spaces")
+#if os(iOS)
                     .textInputAutocapitalization(.never)
+#endif
                     .foregroundStyle(.secondary)
                     .font(.caption)
             }.padding(.bottom)

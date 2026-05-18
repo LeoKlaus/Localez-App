@@ -103,4 +103,10 @@ class ConnectionHandler {
         
         return (response, newInstance, error)
     }
+    
+    func deleteAccount() async throws {
+        _ = try await self.apiHandler.sendRequest(method: .DELETE, endpoint: .me)
+        try self.currentInstance?.delete()
+        self.currentInstance = nil
+    }
 }

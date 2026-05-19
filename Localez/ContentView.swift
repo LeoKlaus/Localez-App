@@ -11,39 +11,28 @@ import Localez_API
 
 struct ContentView: View {
     
+    @AppStorage(.userDefaults(.activeInstance), store: .localez)
+    var activeInstance: ConnectedInstance? = nil
+    
+    @Environment(NavigationHandler.self) var navigationHandler
     @Environment(ConnectionHandler.self) var connectionHandler
     @EnvironmentObject var errorHandler: ErrorHandler
     
-    @State private var projects: [ProjectResponse] = []
-    
     var body: some View {
-        TabView {
-            Tab("Projects", systemImage: "folder") {
-                VStack {
-                    Image(systemName: "globe")
-                        .imageScale(.large)
-                        .foregroundStyle(.tint)
-                    Text("Hello, \(self.connectionHandler.currentInstance?.username ?? "")!")
-                    
-                    ScrollView {
-                        ForEach(self.projects) { project in
-                            Text(project.name)
-                        }
-                    }
-                    
-                    
+        @Bindable var navigationHandler = self.navigationHandler
+        
+        TabView(selection: $navigationHandler.currentTab) {
+            if let currentProject = self.activeInstance?.selectedProject {
+                Tab("Strings", systemImage: "text.alignleft", value: .strings) {
+                    Text(currentProject.name + ": Strings")
                 }
-                .padding()
-                .throwingTask(taskDescription: "loading projects") {
-                    let loadedProjects: [ProjectResponse] = try await self.connectionHandler.apiHandler.get()
-                    
-                    withAnimation {
-                        self.projects = loadedProjects
-                    }
+            } else {
+                Tab("Projects", systemImage: "folder", value: .projects) {
+                    ProjectList()
                 }
             }
             
-            Tab("Settings", systemImage: "gear") {
+            Tab("Settings", systemImage: "gear", value: .settings) {
                 SettingsView()
             }
         }

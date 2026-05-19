@@ -22,6 +22,8 @@ struct SettingsView: View {
     var body: some View {
         NavigationSplitView {
             List(selection: self.$settingsTab) {
+                SwitchProjectButton()
+                
                 Section("Your account") {
                     Label("Manage account", systemImage: "person.crop.circle").tag(SettingsItem.auth)
                     

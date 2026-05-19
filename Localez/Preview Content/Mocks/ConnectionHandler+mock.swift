@@ -8,6 +8,7 @@
 import Foundation
 import Localez_API
 import OSLog
+import UIKit
 
 enum MockApiError: Error, LocalizedError {
     case notImplemented
@@ -45,6 +46,12 @@ nonisolated class MockApiHandler: LocalezApiHandler {
     
     private var registeredPasskeys = [
         PasskeyResponse.mock
+    ]
+    
+    private var projects: [ProjectResponse] = [
+        .mock,
+        .mock2,
+        .mock3
     ]
     
     override func sendRequest(method: HttpMethod, endpoint: ApiEndpoint, body: Data? = nil, queryItems: [URLQueryItem] = [], isRetry: Bool = false, isAuthenticated: Bool = true) async throws -> Data {
@@ -99,6 +106,23 @@ nonisolated class MockApiHandler: LocalezApiHandler {
                 $0.id == id
             })
             return Data()
+        case .projects:
+            return try Self.jsonEncoder.encode(self.projects)
+        case .project(let id):
+            if let project = self.projects.first(where: {$0.id == id}) {
+                return try Self.jsonEncoder.encode(project)
+            } else {
+                throw ApiError.notFound
+            }
+        case .projectIcon(let id):
+            if let project = self.projects.first(where: {$0.id == id}) {
+                if project == .mock, let imgData = await UIImage(resource: .paperparrotIcon).pngData() {
+                    return imgData
+                } else if project == .mock2, let imgData = await UIImage(resource: .plappaIcon).pngData() {
+                    return imgData
+                }
+            }
+            throw ApiError.notFound
         default:
             throw MockApiError.notImplemented
         }

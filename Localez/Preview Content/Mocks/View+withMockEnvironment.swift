@@ -17,6 +17,7 @@ struct WithMockEnvironmentViewModifier: ViewModifier {
         content
             .withErrorHandling(onTap: { self.toastToShow = $0 })
             .environment(ConnectionHandler.mock)
+            .environment(NavigationHandler.shared)
             .sheet(item: self.$toastToShow) { toast in
                 ErrorInfoSheet(toast: toast)
             }

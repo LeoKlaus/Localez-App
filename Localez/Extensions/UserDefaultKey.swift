@@ -9,7 +9,7 @@
 import Foundation
 
 enum UserDefaultKey: String, CaseIterable {
-    case activeInstanceId
+    case activeInstance
     case connectedInstances
 }
 

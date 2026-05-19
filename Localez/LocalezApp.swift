@@ -14,7 +14,10 @@ struct LocalezApp: App {
     
     @State private var connectionHandler: ConnectionHandler = .init()
     
+    @State private var navigationHandler: NavigationHandler = .shared
+    
     @State private var tappedErrorToast: ErrorToast? = nil
+    
     
     var body: some Scene {
         WindowGroup {
@@ -28,6 +31,7 @@ struct LocalezApp: App {
                 }
             }
             .environment(self.connectionHandler)
+            .environment(self.navigationHandler)
             .withErrorHandling(onTap: { self.tappedErrorToast = $0 })
             .sheet(item: self.$tappedErrorToast) { toast in
                 ErrorInfoSheet(toast: toast)

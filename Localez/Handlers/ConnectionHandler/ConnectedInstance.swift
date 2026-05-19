@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Localez_API
 
 enum ConnectedInstanceError: LocalizedError {
     case couldntAccessUserdefaults
@@ -38,11 +39,32 @@ struct ConnectedInstance: Codable, Hashable, Sendable, Identifiable {
     }
     let serverURL: URL
     let username: String
+    private(set) var selectedProject: ProjectResponse?
     
     init(serverURL: URL, username: String) {
         self.id = UUID().uuidString
         self.serverURL = serverURL
         self.username = username
+    }
+    
+
+    mutating func setSelectedProject(_ project: ProjectResponse?) throws {
+        self.selectedProject = project
+        
+        guard let defaults = UserDefaults.localez else {
+            throw ConnectedInstanceError.couldntAccessUserdefaults
+        }
+        
+        var connectedInstances: [String:ConnectedInstance] = [:]
+        
+        if let instancesData = defaults.string(forKey: .userDefaults(.connectedInstances)) {
+            connectedInstances = try JSONDecoder().decode([String:ConnectedInstance].self, from: Data(instancesData.utf8))
+        }
+        
+        connectedInstances[self.id] = self
+        
+        defaults.set((self as ConnectedInstance?).rawValue, forKey: .userDefaults(.activeInstance))
+        defaults.set(connectedInstances.rawValue, forKey: .userDefaults(.connectedInstances))
     }
     
     /**
@@ -91,16 +113,16 @@ struct ConnectedInstance: Codable, Hashable, Sendable, Identifiable {
         }
         
         var connectedInstances = try Self.getConnectedInstances()
-        let activeInstanceId: String? = defaults.string(forKey: .userDefaults(.activeInstanceId))
+        var activeInstance: ConnectedInstance? = try Self.getActiveInstance()
         
         connectedInstances.removeValue(forKey: self.id)
-        
         KeychainHandler.standard.delete(service: self.serverURL.absoluteString, account: self.username)
         
-        if activeInstanceId == self.id {
-            defaults.set(connectedInstances.values.first?.id, forKey: .userDefaults(.activeInstanceId))
+        if activeInstance?.id == self.id {
+            activeInstance = connectedInstances.values.first
         }
         
+        defaults.set(activeInstance.rawValue, forKey: .userDefaults(.activeInstance))
         defaults.set(connectedInstances.rawValue, forKey: .userDefaults(.connectedInstances))
     }
     
@@ -108,7 +130,8 @@ struct ConnectedInstance: Codable, Hashable, Sendable, Identifiable {
         guard let defaults = UserDefaults.localez else {
             throw ConnectedInstanceError.couldntAccessUserdefaults
         }
-        defaults.set(self.id, forKey: .userDefaults(.activeInstanceId))
+        
+        defaults.set((self as ConnectedInstance?).rawValue, forKey: .userDefaults(.activeInstance))
     }
     
     /**
@@ -121,17 +144,11 @@ struct ConnectedInstance: Codable, Hashable, Sendable, Identifiable {
             throw ConnectedInstanceError.couldntAccessUserdefaults
         }
         
-        guard let instanceId = defaults.string(forKey: .userDefaults(.activeInstanceId)) else {
-            throw ConnectedInstanceError.noActiveInstance
-        }
-        
-        let connectedInstances = try Self.getConnectedInstances()
-        
-        guard let activeInstance = connectedInstances[instanceId] else {
+        guard let instanceString = defaults.string(forKey: .userDefaults(.activeInstance)) else {
             throw ConnectedInstanceError.instanceNotFound
         }
         
-        return activeInstance
+        return try JSONDecoder().decode(ConnectedInstance.self, from: Data(instanceString.utf8))
     }
     
     /**

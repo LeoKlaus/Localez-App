@@ -5,8 +5,8 @@
 //  Created by Leo Wehrfritz on 18.05.26.
 //
 
-import Foundation
 import Localez_API
+import SwiftUI
 
 enum ContentViewTab {
     case strings
@@ -22,4 +22,5 @@ class NavigationHandler {
     
     var currentTab: ContentViewTab = .projects
     
+    var projectListPath: NavigationPath = .init()
 }

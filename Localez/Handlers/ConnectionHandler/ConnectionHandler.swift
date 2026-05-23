@@ -56,10 +56,11 @@ class ConnectionHandler {
         self.apiHandler = LocalezApiHandler(baseURL: newURL)
     }
     
-    func login(_ response: TokenResponse, username: String) throws {
+    func login(_ response: TokenResponse, username: String, userId: String) throws {
         let newInstance = ConnectedInstance(
             serverURL: self.apiHandler.baseURL,
-            username: username
+            username: username,
+            userId: userId
         )
         
         try self.applyNewInstance(instance: newInstance, accessToken: response.accessToken, refreshToken: response.refreshToken)
@@ -77,7 +78,13 @@ class ConnectionHandler {
             password: password,
             totpCode: totpToken
         )
-        try self.login(response, username: username)
+        do {
+            let me: MeResponse = try await self.apiHandler.get()
+            try self.login(response, username: username, userId: me.id)
+        } catch {
+            Self.logger.error("Error while loading user details during login: \(error.localizedDescription, privacy: .public)\n\(String(describing: error), privacy: .public)")
+            throw error
+        }
     }
     
     func applyNewInstance(instance: ConnectedInstance, accessToken: String, refreshToken: String) throws {
@@ -93,15 +100,10 @@ class ConnectionHandler {
         )
     }
     
-    func startRegistration(username: String, password: String) async throws -> (RegisterResponse, ConnectedInstance, Error?) {
+    func startRegistration(username: String, password: String) async throws -> (RegisterResponse, Error?) {
         let (response, error) = try await self.apiHandler.registerUser(username: username, password: password)
         
-        let newInstance = ConnectedInstance(
-            serverURL: self.apiHandler.baseURL,
-            username: username
-        )
-        
-        return (response, newInstance, error)
+        return (response, error)
     }
     
     func deleteAccount() async throws {
@@ -109,4 +111,6 @@ class ConnectionHandler {
         try self.currentInstance?.delete()
         self.currentInstance = nil
     }
+    
+    
 }

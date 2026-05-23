@@ -10,7 +10,7 @@ import Localez_API
 
 nonisolated extension MeResponse {
     static let mockAdmin = MeResponse(
-        id: UUID(),
+        id: UUID().uuidString,
         username: "leo",
         globalRole: .admin,
         isActive: true,
@@ -20,7 +20,7 @@ nonisolated extension MeResponse {
     )
     
     static let mock2fa = MeResponse(
-        id: UUID(),
+        id: UUID().uuidString,
         username: "leo",
         globalRole: .admin,
         isActive: true,
@@ -30,7 +30,7 @@ nonisolated extension MeResponse {
     )
     
     static let mockPasskey = MeResponse(
-        id: UUID(),
+        id: UUID().uuidString,
         username: "leo",
         globalRole: .admin,
         isActive: true,
@@ -40,7 +40,7 @@ nonisolated extension MeResponse {
     )
     
     static let mockInsecure = MeResponse(
-        id: UUID(),
+        id: UUID().uuidString,
         username: "leo",
         globalRole: .admin,
         isActive: true,

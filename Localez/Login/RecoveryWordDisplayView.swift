@@ -34,7 +34,7 @@ struct RecoveryWordDisplayView: View {
             LazyVGrid(columns: self.columns) {
                 ForEach(self.words.indices, id: \.self) { index in
                     HStack(spacing: 0) {
-                        Text("\(index + 1). ")
+                        Text(verbatim: "\(index + 1). ")
                             .foregroundStyle(.secondary)
                         Text(self.words[index])
                             .monospaced()

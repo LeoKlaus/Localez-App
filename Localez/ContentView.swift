@@ -24,7 +24,8 @@ struct ContentView: View {
         TabView(selection: $navigationHandler.currentTab) {
             if let currentProject = self.activeInstance?.selectedProject {
                 Tab("Strings", systemImage: "text.alignleft", value: .strings) {
-                    Text(currentProject.name + ": Strings")
+                    ProjectDetailView(project: currentProject)
+                        .id(self.activeInstance?.selectedProject)
                 }
             } else {
                 Tab("Projects", systemImage: "folder", value: .projects) {
@@ -36,6 +37,7 @@ struct ContentView: View {
                 SettingsView()
             }
         }
+        .tabViewStyle(.sidebarAdaptable)
     }
 }
 

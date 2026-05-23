@@ -20,27 +20,19 @@ struct SettingsView: View {
     @State private var settingsTab: SettingsItem?
     
     var body: some View {
-        NavigationSplitView {
-            List(selection: self.$settingsTab) {
+        NavigationStack {
+            List {
                 SwitchProjectButton()
                 
                 Section("Your account") {
-                    Label("Manage account", systemImage: "person.crop.circle").tag(SettingsItem.auth)
+                    NavigationLink(destination:  AuthSettingsView()) {
+                        Label("Manage account", systemImage: "person.crop.circle")
+                    }
                     
                     LogOutButton()
                 }
             }
-            .listStyle(.sidebar)
             .navigationTitle("Settings")
-        } detail: {
-            NavigationStack {
-                switch self.settingsTab {
-                case .auth:
-                    AuthSettingsView()
-                case .none:
-                    Text("Select a settings Item")
-                }
-            }
         }
     }
 }

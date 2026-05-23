@@ -8,7 +8,7 @@
 import Foundation
 import Localez_API
 import OSLog
-import UIKit
+import SwiftUI
 
 enum MockApiError: Error, LocalizedError {
     case notImplemented
@@ -116,13 +116,31 @@ nonisolated class MockApiHandler: LocalezApiHandler {
             }
         case .projectIcon(let id):
             if let project = self.projects.first(where: {$0.id == id}) {
+                #if canImport(UIKit)
                 if project == .mock, let imgData = await UIImage(resource: .paperparrotIcon).pngData() {
                     return imgData
                 } else if project == .mock2, let imgData = await UIImage(resource: .plappaIcon).pngData() {
                     return imgData
                 }
+                #else
+                if project == .mock, let imgData = await NSImage(resource: .paperparrotIcon).tiffRepresentation {
+                    return imgData
+                } else if project == .mock2, let imgData = await NSImage(resource: .plappaIcon).tiffRepresentation {
+                    return imgData
+                }
+                #endif
             }
             throw ApiError.notFound
+        case .projectStats(_):
+            return try Self.jsonEncoder.encode(ProjectStats.mock)
+        case .projectLocalizations(_, _):
+            return try Self.jsonEncoder.encode([
+                LocalizationWithKeyResponse.mock,
+                .mockNeedsReview,
+                .mockTranslated,
+                .mockDeviceVariation,
+                .mockPluralVariation
+            ])
         default:
             throw MockApiError.notImplemented
         }

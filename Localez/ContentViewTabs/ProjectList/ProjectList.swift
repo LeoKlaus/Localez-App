@@ -14,7 +14,6 @@ struct ProjectList: View {
     @AppStorage(.userDefaults(.activeInstance), store: .localez)
     var activeInstance: ConnectedInstance? = nil
     
-    @Environment(NavigationHandler.self) var navigationHandler
     @Environment(ConnectionHandler.self) var connectionHandler
     @EnvironmentObject var errorHandler: ErrorHandler
     
@@ -22,10 +21,7 @@ struct ProjectList: View {
     
     @State private var isLoadingProjects: Bool = true
     
-    @State private var selectedProject: ProjectResponse?
-    
     var body: some View {
-        @Bindable var navigationHandler = self.navigationHandler
         NavigationStack {
             List(self.projects) { project in
                 Button {

@@ -102,13 +102,13 @@ struct TotpConfirmationSheet: View {
     
     let setupResponse: TotpSetupResponse
     
-    @State private var qrCodeImage: UIImage?
+    @State private var qrCodeImage: Image?
     @State private var confirmationCode: String = ""
     
     var body: some View {
         VStack {
             if let qrCodeImage {
-                Image(uiImage: qrCodeImage)
+                qrCodeImage
                     .interpolation(.none)
                     .resizable()
                     .scaledToFit()
@@ -174,7 +174,19 @@ struct TotpConfirmationSheet: View {
                     throw QRCodeError.noCGImage
                 }
                 
-                self.qrCodeImage = UIImage(cgImage: cgImage)
+                #if canImport(UIKit)
+                self.qrCodeImage = Image(uiImage: UIImage(cgImage: cgImage))
+                #else
+                self.qrCodeImage = Image(
+                    nsImage: NSImage(
+                        cgImage: cgImage,
+                        size: NSSize(
+                            width: cgImage.width,
+                            height: cgImage.height
+                        )
+                    )
+                )
+                #endif
             } catch {
                 self.errorHandler.handle(error, while: "generating QR code")
             }

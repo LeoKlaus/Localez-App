@@ -20,5 +20,5 @@ extension String {
 }
 
 extension UserDefaults {
-    static let localez = UserDefaults(suiteName: "group.me.wehrfritz.localez")
+    static let localez = UserDefaults(suiteName: "28KGVFV686.group.me.wehrfritz.localez")
 }

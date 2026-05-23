@@ -1,0 +1,390 @@
+{
+  "sourceLanguage" : "en",
+  "strings" : {
+    "%@ missing" : {
+
+    },
+    "%@ need review" : {
+
+    },
+    "%@ translated" : {
+
+    },
+    "000000" : {
+      "shouldTranslate" : false
+    },
+    "Add passkey" : {
+
+    },
+    "Authenticator code" : {
+
+    },
+    "Authenticator secret" : {
+
+    },
+    "Bad gateway" : {
+
+    },
+    "Bad request" : {
+
+    },
+    "Bad request. Response:\n%@" : {
+
+    },
+    "Cancel" : {
+
+    },
+    "Change password" : {
+
+    },
+    "Code" : {
+
+    },
+    "Comment: %@" : {
+
+    },
+    "Confirm" : {
+
+    },
+    "Confirm password" : {
+
+    },
+    "Conflict" : {
+
+    },
+    "Conflict. Response:\n%@" : {
+
+    },
+    "Connect" : {
+
+    },
+    "Connect to a different server" : {
+
+    },
+    "Connected to %@" : {
+
+    },
+    "Copy" : {
+
+    },
+    "Copy to clipboard" : {
+
+    },
+    "Couldn't access UserDefaults" : {
+
+    },
+    "Couldn't decode token data" : {
+
+    },
+    "Couldn't find token data" : {
+
+    },
+    "Couldn't generate passkey challenge data" : {
+
+    },
+    "Couldn't get host" : {
+
+    },
+    "Couldn't get Passkey assertion" : {
+
+    },
+    "Couldn't get Passkey credential" : {
+
+    },
+    "Create an account" : {
+
+    },
+    "Current password" : {
+
+    },
+    "Danger zone" : {
+
+    },
+    "Delete account" : {
+
+    },
+    "Delete your account?" : {
+
+    },
+    "Details" : {
+
+    },
+    "Device:" : {
+
+    },
+    "Disable authenticator" : {
+
+    },
+    "Done" : {
+
+    },
+    "Enter all 12 words separated by spaces" : {
+
+    },
+    "Enter the current code from your authenticator app to confirm." : {
+
+    },
+    "Enter your recovery words to reset your password." : {
+
+    },
+    "Forbidden" : {
+
+    },
+    "Forgot password?" : {
+
+    },
+    "Have you saved your recovery words?" : {
+
+    },
+    "http://" : {
+      "shouldTranslate" : false
+    },
+    "https://" : {
+      "shouldTranslate" : false
+    },
+    "I agree to the [privacy policy](%@)" : {
+
+    },
+    "Internal server error" : {
+
+    },
+    "Internal server error. Response:\n%@" : {
+
+    },
+    "Invalid server response" : {
+
+    },
+    "iPhone" : {
+
+    },
+    "Languages" : {
+
+    },
+    "Learn more about self-hosting Localez" : {
+
+    },
+    "Localez can be hosted by other developers. If you use Localez under a domain that's not `translate.wehrfritz.me`, you can enter the URL below to connect to the server." : {
+
+    },
+    "Localez ran into the following error while %@:" : {
+
+    },
+    "Localez URL" : {
+
+    },
+    "Log Out" : {
+
+    },
+    "Log out?" : {
+
+    },
+    "Manage account" : {
+
+    },
+    "Manage passkeys" : {
+
+    },
+    "Method not allowed" : {
+
+    },
+    "Missing" : {
+
+    },
+    "Needs review" : {
+
+    },
+    "Needs Review" : {
+
+    },
+    "New" : {
+
+    },
+    "New password" : {
+
+    },
+    "No" : {
+
+    },
+    "No instance is marked active" : {
+
+    },
+    "No matching instance found" : {
+
+    },
+    "No passkeys configured yet" : {
+
+    },
+    "No strings found" : {
+
+    },
+    "No translations" : {
+
+    },
+    "Not found" : {
+
+    },
+    "Not logged in" : {
+
+    },
+    "Oh no :(" : {
+
+    },
+    "or" : {
+
+    },
+    "Passkey name" : {
+
+    },
+    "Password" : {
+
+    },
+    "Passwords do not match." : {
+
+    },
+    "Plural:" : {
+
+    },
+    "Profile" : {
+
+    },
+    "Projects" : {
+
+    },
+    "Protocol" : {
+
+    },
+    "Received invalid image data" : {
+
+    },
+    "Recover account" : {
+
+    },
+    "Recovery words (space-separated)" : {
+
+    },
+    "Register" : {
+
+    },
+    "Remove" : {
+
+    },
+    "Remove authenticator" : {
+
+    },
+    "Remove passkey %@?" : {
+
+    },
+    "Reset" : {
+
+    },
+    "Reset password" : {
+
+    },
+    "Role:" : {
+
+    },
+    "Save your recovery words" : {
+
+    },
+    "Security" : {
+
+    },
+    "Set up authenticator" : {
+
+    },
+    "Settings" : {
+
+    },
+    "Show QR code" : {
+
+    },
+    "Sign in" : {
+
+    },
+    "Sign up" : {
+
+    },
+    "Source: %@" : {
+
+    },
+    "Store these 12 words somewhere safe. They are the only way to recover your account if you lose your password. They will not be shown again." : {
+
+    },
+    "Strings" : {
+
+    },
+    "Submit" : {
+
+    },
+    "Suggest alternative translation" : {
+
+    },
+    "Switch project" : {
+
+    },
+    "Switch server?" : {
+
+    },
+    "To get started, sign in with your account." : {
+
+    },
+    "Translated" : {
+
+    },
+    "Translation" : {
+
+    },
+    "Two factor authentication required" : {
+
+    },
+    "Unauthorized" : {
+
+    },
+    "Unauthorized. Response:\n%@" : {
+
+    },
+    "Unencrypted connections are only supported to local servers!" : {
+
+    },
+    "Unknown keychain error code: %d" : {
+
+    },
+    "Use passkey" : {
+
+    },
+    "Username" : {
+
+    },
+    "Username:" : {
+
+    },
+    "Validation error" : {
+
+    },
+    "Validation error. Response:\n%@" : {
+
+    },
+    "Verification code" : {
+
+    },
+    "Welcome to **Localez**" : {
+
+    },
+    "Yes" : {
+
+    },
+    "You won't be able to recover your account without these." : {
+
+    },
+    "Your account" : {
+
+    },
+    "Your account will be permanently deleted." : {
+
+    },
+    "Your account will remain active." : {
+
+    }
+  },
+  "version" : "1.2"
+}

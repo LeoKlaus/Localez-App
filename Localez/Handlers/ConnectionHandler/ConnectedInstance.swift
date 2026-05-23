@@ -38,13 +38,15 @@ struct ConnectedInstance: Codable, Hashable, Sendable, Identifiable {
         "\(username)@\(serverURL.host() ?? "")"
     }
     let serverURL: URL
+    let userId: String
     let username: String
     private(set) var selectedProject: ProjectResponse?
     
-    init(serverURL: URL, username: String) {
+    init(serverURL: URL, username: String, userId: String) {
         self.id = UUID().uuidString
         self.serverURL = serverURL
         self.username = username
+        self.userId = userId
     }
     
 
@@ -145,7 +147,7 @@ struct ConnectedInstance: Codable, Hashable, Sendable, Identifiable {
         }
         
         guard let instanceString = defaults.string(forKey: .userDefaults(.activeInstance)) else {
-            throw ConnectedInstanceError.instanceNotFound
+            throw ConnectedInstanceError.noActiveInstance
         }
         
         return try JSONDecoder().decode(ConnectedInstance.self, from: Data(instanceString.utf8))

@@ -20,7 +20,7 @@ struct ErrorInfoSheet: View {
                 }
             
             VStack(alignment: .leading) {
-                Text("Localez ran into the following error:")
+                Text("Localez ran into the following error while \(self.toast.performedTask):")
                 Text(self.toast.errorDescription)
                     .foregroundStyle(.red)
             }
@@ -35,5 +35,5 @@ struct ErrorInfoSheet: View {
 }
 
 #Preview {
-    ErrorInfoSheet(toast: ErrorToast(error: ConnectedInstanceError.couldntAccessUserdefaults))
+    ErrorInfoSheet(toast: ErrorToast(error: ConnectedInstanceError.couldntAccessUserdefaults, performedTask: "loading something"))
 }

@@ -31,6 +31,10 @@ struct RegistrationView: View {
     @State private var newInstance: ConnectedInstance?
     @State private var response: RegisterResponse?
     
+    private var privacyPolicyText: String {
+        "I agree to the [privacy policy](\(self.connectionHandler.apiHandler.baseURL.appending(path: "/legal/privacy")))"
+    }
+    
     var body: some View {
         VStack {
             Text("Create an account")
@@ -55,10 +59,9 @@ struct RegistrationView: View {
             }
             
             Toggle(isOn: self.$agreedToPp) {
-                HStack(spacing: 0) {
-                    Text("I agree to the ")
-                    Link("privacy policy", destination: self.connectionHandler.apiHandler.baseURL.appending(path: "/legal/privacy"))
-                }
+                Text(.init(self.privacyPolicyText))
+                    .foregroundStyle(.secondary)
+                
             }
             .toggleStyle(.switch)
             .padding()
@@ -92,14 +95,20 @@ struct RegistrationView: View {
         }
         Task {
             do {
-                let (response, instance, error) = try await self.connectionHandler.startRegistration(username: self.username, password: self.password)
+                let (response, error) = try await self.connectionHandler.startRegistration(username: self.username, password: self.password)
                 
                 if let error {
                     self.errorHandler.handle(error, while: "saving token")
                 }
                 
+                do {
+                    let user: MeResponse = try await self.connectionHandler.apiHandler.get()
+                    self.newInstance = ConnectedInstance(serverURL: self.connectionHandler.apiHandler.baseURL, username: self.username, userId: user.id)
+                } catch {
+                    self.errorHandler.handle(error, while: "loading new user")
+                }
+                
                 self.recoveryWords = RecoveryWordWrapper(words: response.recoveryWords)
-                self.newInstance = instance
                 self.response = response
             } catch {
                 self.errorHandler.handle(error, while: "signing up")

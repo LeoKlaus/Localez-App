@@ -85,7 +85,14 @@ struct ForgotPasswordView: View {
             do {
                 let tokenResponse = try await self.connectionHandler.apiHandler.recoverAccount(username: self.username, recoveryWords: wordArray, newPassword: self.password)
                 self.errorHandler.showInfo("Password reset successfully!")
-                try self.connectionHandler.login(tokenResponse, username: self.username)
+                
+                do {
+                    let user: MeResponse = try await self.connectionHandler.apiHandler.get()
+                    try self.connectionHandler.login(tokenResponse, username: self.username, userId: user.id)
+                } catch {
+                    self.errorHandler.handle(error, while: "loading user details")
+                }
+                
             } catch {
                 self.errorHandler.handle(error, while: "recovering account")
             }

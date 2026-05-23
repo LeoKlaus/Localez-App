@@ -117,7 +117,7 @@ struct LoginView: View {
                 do {
                     let user: MeResponse = try await self.connectionHandler.apiHandler.get()
                     
-                    try self.connectionHandler.login(tokenResponse, username: user.username)
+                    try self.connectionHandler.login(tokenResponse, username: user.username, userId: user.id)
                 } catch {
                     self.errorHandler.handle(error, while: "getting user info after passkey authentication")
                 }

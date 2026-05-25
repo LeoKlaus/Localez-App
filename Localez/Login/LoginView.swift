@@ -41,6 +41,7 @@ struct LoginView: View {
             
             TextField("Username", text: self.$username)
                 .textContentType(.username)
+                .autocorrectionDisabled()
 #if os(iOS)
                 .textInputAutocapitalization(.never)
 #endif

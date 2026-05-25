@@ -124,7 +124,11 @@ struct ConnectedInstance: Codable, Hashable, Sendable, Identifiable {
             activeInstance = connectedInstances.values.first
         }
         
-        defaults.set(activeInstance.rawValue, forKey: .userDefaults(.activeInstance))
+        if let _ = activeInstance {
+            defaults.set(activeInstance.rawValue, forKey: .userDefaults(.activeInstance))
+        } else {
+            defaults.set(nil, forKey: .userDefaults(.activeInstance))
+        }
         defaults.set(connectedInstances.rawValue, forKey: .userDefaults(.connectedInstances))
     }
     
@@ -149,7 +153,6 @@ struct ConnectedInstance: Codable, Hashable, Sendable, Identifiable {
         guard let instanceString = defaults.string(forKey: .userDefaults(.activeInstance)) else {
             throw ConnectedInstanceError.noActiveInstance
         }
-        
         return try JSONDecoder().decode(ConnectedInstance.self, from: Data(instanceString.utf8))
     }
     

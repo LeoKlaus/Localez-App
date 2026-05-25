@@ -38,6 +38,9 @@
 		4AE64C962FBA757100D993EE /* Exceptions for "Localez" folder in "Localez" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
+				.gitignore,
+				.localez,
+				get_translations.sh,
 				Info.plist,
 			);
 			target = 4AE63CDE2FB9E9DC00D993EE /* Localez */;

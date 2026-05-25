@@ -13,12 +13,24 @@ struct LogOutButton: View {
     @Environment(ConnectionHandler.self) var connectionHandler
     @EnvironmentObject var errorHandler: ErrorHandler
     
+    @State private var isLoggingOut: Bool = false
     @State private var showConfirmationDialog: Bool = false
     
     var body: some View {
-        Button("Log Out", systemImage: "rectangle.portrait.and.arrow.right", role: .destructive) {
+        Button(role: .destructive) {
             self.showConfirmationDialog = true
+        } label: {
+            Label {
+                Text("Log out")
+            } icon: {
+                if self.isLoggingOut {
+                    ProgressView()
+                } else {
+                    Image(systemName: "rectangle.portrait.and.arrow.right")
+                }
+            }
         }
+        .disabled(self.isLoggingOut)
         .foregroundStyle(.red)
         .confirmationDialog("Log out?", isPresented: self.$showConfirmationDialog) {
             Button("Yes", role: .destructive, action: self.logOut)
@@ -29,12 +41,18 @@ struct LogOutButton: View {
     }
     
     func logOut() {
+        withAnimation {
+            self.isLoggingOut = true
+        }
         Task {
             do {
                 try await self.connectionHandler.logout()
             } catch {
                 self.errorHandler.handle(error, while: "logging out")
             }
+        }
+        withAnimation {
+            self.isLoggingOut = false
         }
     }
 }

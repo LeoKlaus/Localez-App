@@ -1,0 +1,3 @@
+BASE_URL="https://translate.wehrfritz.me"
+PROJECT_ID="fdf9a670-1427-42a2-8a9e-64a9dc73c068"
+XCSTRINGS_PATH="${SRCROOT}/Localez/Localizable.xcstrings"

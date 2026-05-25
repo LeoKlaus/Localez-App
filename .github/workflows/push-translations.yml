@@ -1,0 +1,27 @@
+name: Push-Translations
+
+on: [push]
+ 
+jobs:
+  upload:
+    runs-on: ubuntu-latest
+ 
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+ 
+      - name: POST Localizable.xcstrings to translate.wehrfritz.me
+        run: |
+          HTTP_STATUS=$(curl --silent --output /tmp/response.txt --write-out "%{http_code}" \
+            --request POST \
+            --url "https://translate.wehrfritz.me/api/projects/fdf9a670-1427-42a2-8a9e-64a9dc73c068/import" \
+            --form "file=@Localez/Localizable.xcstrings;type=application/json" \
+            --form "conflict=overwrite" \
+            --header "Authorization: Bearer ${{ secrets.LOCALEZ_PROJECT_TOKEN }}")
+ 
+          cat /tmp/response.txt
+ 
+          if [ "$HTTP_STATUS" -lt 200 ] || [ "$HTTP_STATUS" -ge 300 ]; then
+            echo "Upload failed with HTTP $HTTP_STATUS"
+            exit 1
+          fi
